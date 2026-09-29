@@ -1,65 +1,487 @@
-<!doctype html>
-<html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portofolio - Junior Full Stack Developer</title>
-    <link rel="stylesheet" href="style.css" />
-    <!-- Menggunakan font GoogleInter untuk tampilan modern -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-      <div class="logo">MyPortfolio</div>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-      </ul>
-    </nav>
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - Junior Full Stack Developer</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              500: '#06b6d4',
+              600: '#0891b2',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
 
-    <!-- Hero / Profile Section -->
-    <section id="about" class="section hero-section">
-      <div class="container">
-        <h1 id="user-name">Loading...</h1>
-        <p id="user-role" class="role-badge">Loading...</p>
-        <p id="user-about" class="about-text">Loading...</p>
+    /* Base Styling untuk Smooth Transition & Mode Switch */
+    body {
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Dark Mode Glass Styling */
+    .dark .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+    .dark .glass-input {
+      background-color: rgba(15, 23, 42, 0.8);
+      border-color: rgba(51, 65, 85, 0.8);
+      color: #f8fafc;
+    }
+
+    /* Light Mode Glass Styling (Sempurna & Konsisten) */
+    .light body {
+      background-color: #f8fafc !important;
+      color: #0f172a !important;
+    }
+    .light .glass-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    }
+    .light .glass-card h2, 
+    .light .glass-card h3,
+    .light .glass-card label,
+    .light #terminal-output {
+      color: #0f172a !important;
+    }
+    .light .glass-card p {
+      color: #475569 !important;
+    }
+    .light .glass-input {
+      background-color: #ffffff;
+      border-color: #cbd5e1;
+      color: #0f172a;
+    }
+    .light header {
+      background: rgba(255, 255, 255, 0.8) !important;
+      border-bottom-color: rgba(226, 232, 240, 0.8) !important;
+    }
+    .light header nav a {
+      color: #334155;
+    }
+    .light header nav a:hover {
+      color: #0891b2;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-cyan-500 selection:text-white min-h-screen flex flex-col justify-between overflow-x-hidden">
+
+  <!-- Floating Background Glows -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/2 -right-40 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="sticky top-0 z-50 glass-card border-b border-slate-800/80 transition-colors duration-300">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#" class="font-bold text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400 flex items-center gap-2">
+        <i data-lucide="code-2" class="text-cyan-400"></i> Portfolio
+      </a>
+      
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <a href="#skills" class="hover:text-cyan-400 transition-colors">Skills & Tech</a>
+        <a href="#projects" class="hover:text-cyan-400 transition-colors">Projects</a>
+        <a href="#certificates" class="hover:text-cyan-400 transition-colors">Certificates</a>
+        <a href="#terminal" class="hover:text-cyan-400 transition-colors">Terminal CLI</a>
+        <a href="#contact" class="hover:text-cyan-400 transition-colors">Contact</a>
+      </nav>
+
+      <!-- Theme Toggle Button -->
+      <button id="theme-toggle" class="p-2.5 rounded-xl glass-card border border-slate-700/50 hover:border-cyan-500/50 text-slate-300 hover:text-cyan-400 transition-all">
+        <i id="theme-icon" data-lucide="sun" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER DENGAN JALUR SCROLL LEBIH LEGA (space-y-36 & py-20) -->
+  <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-36 py-20">
+
+    <!-- HERO / ABOUT SECTION -->
+    <section id="about" class="flex flex-col md:flex-row items-center justify-between gap-12 pt-6 scroll-mt-24">
+      <div class="flex-1 space-y-6 text-center md:text-left">
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight">
+          Hello, I'm <br/>
+          <span id="user-name" class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-400 to-indigo-400">Diska</span>
+        </h1>
+
+        <div id="user-role" class="text-xl text-cyan-400 font-semibold">
+          Junior Full Stack Developer
+        </div>
+
+        <p id="user-about" class="text-base text-slate-400 max-w-xl leading-relaxed">
+          I’m an Informatics Engineering student with a goal of becoming a Full-Stack Developer. I enjoy building web applications, exploring new technologies, and continuously improving my skills through hands-on projects.
+        </p>
       </div>
-    </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="section">
-      <div class="container">
-        <h2>Tech Stack & Skills</h2>
-        <div id="skills-container" class="skills-grid">
-          <!-- Skills akan di-load lewat JavaScript -->
+      <!-- Profile Photo Frame -->
+      <div class="relative group">
+        <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-indigo-500 rounded-3xl blur-lg opacity-50 group-hover:opacity-80 transition duration-500"></div>
+        <div class="relative w-64 h-64 sm:w-72 sm:h-72 rounded-2xl overflow-hidden glass-card p-2 border border-slate-700/50">
+          <img src="foto formal diska.png" alt="Diska Profile" class="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105" />
         </div>
       </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="section">
-      <div class="container">
-        <h2>Featured Projects</h2>
-        <div id="projects-container" class="projects-grid">
-          <!-- Projects akan di-load lewat JavaScript -->
+    <!-- SKILLS & TECH SECTION -->
+    <section id="skills" class="space-y-10 scroll-mt-24">
+      <div class="text-center space-y-2">
+        <h2 class="text-3xl font-bold tracking-tight">Skills & Tech Stack</h2>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6">
+        <!-- HTML5 -->
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all hover:-translate-y-1 flex flex-col items-center gap-3 text-center">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" class="w-12 h-12" />
+          <span class="font-semibold text-sm">HTML5</span>
+        </div>
+        <!-- CSS3 -->
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all hover:-translate-y-1 flex flex-col items-center gap-3 text-center">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" class="w-12 h-12" />
+          <span class="font-semibold text-sm">CSS3</span>
+        </div>
+        <!-- JavaScript -->
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all hover:-translate-y-1 flex flex-col items-center gap-3 text-center">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" class="w-12 h-12" />
+          <span class="font-semibold text-sm">JavaScript</span>
+        </div>
+        <!-- MySQL -->
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all hover:-translate-y-1 flex flex-col items-center gap-3 text-center">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL" class="w-12 h-12" />
+          <span class="font-semibold text-sm">MySQL</span>
+        </div>
+        <!-- Git & GitHub -->
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all hover:-translate-y-1 flex flex-col items-center gap-3 text-center">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" class="w-12 h-12" />
+          <span class="font-semibold text-sm">Git & GitHub</span>
+        </div>
+        <!-- Golang -->
+        <div class="glass-card p-5 rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all hover:-translate-y-1 flex flex-col items-center gap-3 text-center">
+            <img src="icon golang.png" alt="Golang" class="w-12 h-12 object-contain" />
+            <span class="font-semibold text-sm">Golang</span>
         </div>
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-      <p>
-        &copy; 2026 Junior Full Stack Developer. Built with Golang & Vanilla JS.
-      </p>
-    </footer>
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="space-y-10 scroll-mt-24">
+      <div>
+        <h2 class="text-3xl font-bold tracking-tight">Featured Projects</h2>
+        <p class="text-slate-400 mt-1">Applications and projects built during my learning journey.</p>
+      </div>
 
-    <script src="app.js"></script>
-  </body>
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- E-Commerce Project Card -->
+        <div class="glass-card rounded-2xl overflow-hidden border border-slate-800 hover:border-cyan-500/40 transition-all duration-300 p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-medium text-cyan-400 px-3 py-1 rounded-full bg-cyan-950/50 border border-cyan-500/20">Full-Stack Web</span>
+            </div>
+            <h3 class="text-xl font-bold">E-Commerce</h3>
+            <p class="text-sm text-slate-400">A full-stack e-commerce website for technology products, built with Next.js and Go. The project includes user authentication, product and category management, image uploads, and a REST API connected to a MySQL database.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <span class="text-xs px-2.5 py-1 rounded-md bg-slate-900/80 text-cyan-300 border border-slate-800">Next.js</span>
+              <span class="text-xs px-2.5 py-1 rounded-md bg-slate-900/80 text-cyan-300 border border-slate-800">Go</span>
+              <span class="text-xs px-2.5 py-1 rounded-md bg-slate-900/80 text-cyan-300 border border-slate-800">MySQL</span>
+            </div>
+          </div>
+          <div class="pt-2 border-t border-slate-800/80">
+            <a href="https://github.com" target="_blank" class="inline-flex items-center gap-2 text-xs font-semibold text-cyan-400 hover:underline">
+              <i data-lucide="github" class="w-4 h-4"></i> View Repository &rarr;
+            </a>
+          </div>
+        </div>
+
+        <!-- Go REST API ToDo List Card -->
+        <div class="glass-card rounded-2xl overflow-hidden border border-slate-800 hover:border-cyan-500/40 transition-all duration-300 p-6 flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-medium text-indigo-400 px-3 py-1 rounded-full bg-indigo-950/50 border border-indigo-500/20">Backend API</span>
+            </div>
+            <h3 class="text-xl font-bold">Todo API</h3>
+            <p class="text-sm text-slate-400">A simple REST API for managing tasks, built with Go. This project focuses on backend fundamentals such as API development, routing, CRUD operations, and database management.</p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <span class="text-xs px-2.5 py-1 rounded-md bg-slate-900/80 text-cyan-300 border border-slate-800">Go</span>
+              <span class="text-xs px-2.5 py-1 rounded-md bg-slate-900/80 text-cyan-300 border border-slate-800">Gin</span>
+              <span class="text-xs px-2.5 py-1 rounded-md bg-slate-900/80 text-cyan-300 border border-slate-800">GORM</span>
+              <span class="text-xs px-2.5 py-1 rounded-md bg-slate-900/80 text-cyan-300 border border-slate-800">MySQL</span>
+            </div>
+          </div>
+          <div class="pt-2 border-t border-slate-800/80">
+            <a href="https://github.com/diska8/todo-api-golang" target="_blank" class="inline-flex items-center gap-2 text-xs font-semibold text-cyan-400 hover:underline">
+              <i data-lucide="github" class="w-4 h-4"></i> View Repository &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATES SECTION (DENGAN AREA GAMBAR SERTIFIKAT) -->
+    <section id="certificates" class="space-y-10 scroll-mt-24">
+      <div>
+        <h2 class="text-3xl font-bold tracking-tight">Certificates</h2>
+        <p class="text-slate-400 mt-1">Official certifications and course completions.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Certificate 1 -->
+        <div class="glass-card p-4 rounded-2xl border border-slate-800 hover:border-cyan-500/40 transition-all space-y-4 flex flex-col justify-between group">
+          <!-- Space Gambar Sertifikat -->
+          <div class="relative w-full h-40 rounded-xl overflow-hidden bg-slate-900/50 border border-slate-800/80">
+            <img src="network basic.jpg" alt="Networking Basics Certificate" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onError="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+            <div class="hidden absolute inset-0 flex-col items-center justify-center text-slate-500 p-2 text-center bg-slate-900/80">
+              <i data-lucide="image" class="w-8 h-8 mb-1 opacity-50"></i>
+            </div>
+          </div>
+          
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <div class="p-1.5 rounded-lg bg-cyan-950/60 text-cyan-400">
+                <i data-lucide="award" class="w-4 h-4"></i>
+              </div>
+              <h3 class="font-bold text-base line-clamp-1">Networking Basics</h3>
+            </div>
+            <p class="text-xs text-slate-400">Cisco Networking Academy</p>
+          </div>
+          <span class="text-xs text-slate-500 font-mono pt-2 border-t border-slate-800/50">Issued 2025</span>
+        </div>
+
+        <!-- Certificate 2 -->
+        <div class="glass-card p-4 rounded-2xl border border-slate-800 hover:border-cyan-500/40 transition-all space-y-4 flex flex-col justify-between group">
+          <!-- Space Gambar Sertifikat -->
+          <div class="relative w-full h-40 rounded-xl overflow-hidden bg-slate-900/50 border border-slate-800/80">
+            <img src="ethica hacker.jpg" alt="Ethical Hacker Certificate" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onError="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+            <div class="hidden absolute inset-0 flex-col items-center justify-center text-slate-500 p-2 text-center bg-slate-900/80">
+              <i data-lucide="image" class="w-8 h-8 mb-1 opacity-50"></i>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <div class="p-1.5 rounded-lg bg-indigo-950/60 text-indigo-400">
+                <i data-lucide="award" class="w-4 h-4"></i>
+              </div>
+              <h3 class="font-bold text-base line-clamp-1">Ethical Hacker</h3>
+            </div>
+            <p class="text-xs text-slate-400">Cisco Networking Academy</p>
+          </div>
+          <span class="text-xs text-slate-500 font-mono pt-2 border-t border-slate-800/50">Issued 2025</span>
+        </div>
+
+        <!-- Certificate 3 -->
+        <div class="glass-card p-4 rounded-2xl border border-slate-800 hover:border-cyan-500/40 transition-all space-y-4 flex flex-col justify-between group">
+          <!-- Space Gambar Sertifikat -->
+          <div class="relative w-full h-40 rounded-xl overflow-hidden bg-slate-900/50 border border-slate-800/80">
+            <img src="relational database.jpg" alt="Relational Database Certificate" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onError="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+            <div class="hidden absolute inset-0 flex-col items-center justify-center text-slate-500 p-2 text-center bg-slate-900/80">
+              <i data-lucide="image" class="w-8 h-8 mb-1 opacity-50"></i>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <div class="p-1.5 rounded-lg bg-sky-950/60 text-sky-400">
+                <i data-lucide="award" class="w-4 h-4"></i>
+              </div>
+              <h3 class="font-bold text-base line-clamp-1">Relational Database</h3>
+            </div>
+            <p class="text-xs text-slate-400">freeCodeCamp</p>
+          </div>
+          <span class="text-xs text-slate-500 font-mono pt-2 border-t border-slate-800/50">Issued 2026</span>
+        </div>
+
+        <!-- Certificate 4 -->
+        <div class="glass-card p-4 rounded-2xl border border-slate-800 hover:border-cyan-500/40 transition-all space-y-4 flex flex-col justify-between group">
+          <!-- Space Gambar Sertifikat -->
+          <div class="relative w-full h-40 rounded-xl overflow-hidden bg-slate-900/50 border border-slate-800/80">
+            <img src="go basic.jpg" alt="Go Basic Certificate" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onError="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+            <div class="hidden absolute inset-0 flex-col items-center justify-center text-slate-500 p-2 text-center bg-slate-900/80">
+              <i data-lucide="image" class="w-8 h-8 mb-1 opacity-50"></i>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <div class="p-1.5 rounded-lg bg-emerald-950/60 text-emerald-400">
+                <i data-lucide="award" class="w-4 h-4"></i>
+              </div>
+              <h3 class="font-bold text-base line-clamp-1">Go Basic</h3>
+            </div>
+            <p class="text-xs text-slate-400">HackerRank</p>
+          </div>
+          <span class="text-xs text-slate-500 font-mono pt-2 border-t border-slate-800/50">Issued 2026</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE TERMINAL CLI -->
+    <section id="terminal" class="space-y-6 scroll-mt-24">
+      <div class="space-y-1">
+        <h2 class="text-2xl font-bold flex items-center gap-2">
+          <i data-lucide="terminal" class="text-cyan-400"></i> Interactive CLI Mode
+        </h2>
+        <p class="text-sm text-slate-400">Type a command to interact with my portfolio (Type <code class="text-cyan-400 font-mono">help</code> to list options).</p>
+      </div>
+
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 font-mono text-xs sm:text-sm shadow-2xl">
+        <div class="flex items-center gap-2 pb-3 border-b border-slate-800 text-slate-500">
+          <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+          <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+          <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+          <span class="ml-2 text-xs">visitor@diska-portfolio:~</span>
+        </div>
+
+        <div id="terminal-output" class="py-4 space-y-2 min-h-[140px] max-h-[220px] overflow-y-auto text-slate-300">
+          <div>Welcome to my portfolio terminal! Type <span class="text-cyan-400 font-bold">help</span> to view available commands.</div>
+        </div>
+
+        <div class="flex items-center gap-2 pt-3 border-t border-slate-800/60">
+          <span class="text-cyan-400 font-bold">&gt;</span>
+          <input type="text" id="terminal-input" placeholder="Type command here..." class="bg-transparent text-slate-100 focus:outline-none w-full font-mono placeholder:text-slate-600" />
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="glass-card p-8 sm:p-12 rounded-3xl border border-slate-800 space-y-8 scroll-mt-24">
+      <div class="max-w-xl space-y-2">
+        <h2 class="text-3xl font-bold">Get In Touch</h2>
+        <p class="text-slate-400">Have a project or opportunity in mind? Feel free to send a message!</p>
+      </div>
+
+      <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-5 max-w-xl">
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1.5">Your Name</label>
+          <input type="text" required placeholder="John Doe" class="glass-input w-full rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-cyan-500 transition-colors" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1.5">Email Address</label>
+          <input type="email" required placeholder="john@example.com" class="glass-input w-full rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-cyan-500 transition-colors" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1.5">Message</label>
+          <textarea rows="4" required placeholder="Write your message here..." class="glass-input w-full rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-cyan-500 transition-colors"></textarea>
+        </div>
+        <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-indigo-500 text-slate-950 font-bold rounded-xl shadow-lg shadow-cyan-500/20 hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+          <i data-lucide="send" class="w-4 h-4"></i> Send Message
+        </button>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-900/80 py-10 text-center text-xs text-slate-500 relative z-10 mt-12">
+    <p>&copy; 2026 Diska. Built with HTML, CSS, JavaScript & Golang.</p>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 glass-card px-5 py-4 rounded-2xl border border-cyan-500/30 text-slate-100 text-sm shadow-2xl transition-all duration-300 translate-y-24 opacity-0 flex items-center gap-3">
+    <i data-lucide="check-circle-2" class="text-cyan-400 w-5 h-5"></i>
+    <span id="toast-message">Message sent successfully!</span>
+  </div>
+
+  <script>
+    // Initialize Icons
+    lucide.createIcons();
+
+    // Dark / Light Mode Toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+
+    themeToggleBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      document.documentElement.classList.toggle('light');
+
+      if (document.documentElement.classList.contains('dark')) {
+        themeIcon.setAttribute('data-lucide', 'sun');
+      } else {
+        themeIcon.setAttribute('data-lucide', 'moon');
+      }
+      lucide.createIcons();
+    });
+
+    // CLI Terminal Interactive
+    const terminalInput = document.getElementById('terminal-input');
+    const terminalOutput = document.getElementById('terminal-output');
+
+    terminalInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const cmd = terminalInput.value.trim().toLowerCase();
+        terminalInput.value = '';
+        
+        let reply = '';
+        if (cmd === 'help') {
+          reply = 'Available commands: <span class="text-cyan-400">about</span>, <span class="text-cyan-400">skills</span>, <span class="text-cyan-400">projects</span>, <span class="text-cyan-400">clear</span>';
+        } else if (cmd === 'about') {
+          reply = 'Junior Full Stack Developer in Computer Science semester 7.';
+        } else if (cmd === 'skills') {
+          reply = 'HTML, CSS, JavaScript, MySQL, Git & GitHub, Golang';
+        } else if (cmd === 'projects') {
+          reply = '1. E-Commerce Web App | 2. ToDo List REST API (Golang)';
+        } else if (cmd === 'clear') {
+          terminalOutput.innerHTML = '';
+          return;
+        } else if (cmd !== '') {
+          reply = `Command not found: "${cmd}". Type <span class="text-cyan-400">help</span> for options.`;
+        }
+
+        if (reply) {
+          const newLine = document.createElement('div');
+          newLine.innerHTML = `<span class="text-slate-500">&gt; ${cmd}</span><br/>${reply}`;
+          terminalOutput.appendChild(newLine);
+          terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
+      }
+    });
+
+    // Contact Form Submit Handler
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      showToast("Message sent successfully!");
+      e.target.reset();
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-message').textContent = message;
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 3000);
+    }
+  </script>
+</body>
 </html>
