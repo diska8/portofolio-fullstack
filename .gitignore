@@ -1,0 +1,15 @@
+# Executable biner Golang
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+backend/main
+
+# Database local jika nanti dibuat
+*.db
+*.sqlite
+
+# OS generated files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,33 @@
+{
+  "profile": {
+    "name": "Diska Afiansyah Iqbal",
+    "role": "Junior Full Stack Developer",
+    "about_me": "Mahasiswa Teknik Informatika yang sedang mendalami Full-Stack Development."
+  },
+  "skills": [
+    "Golang",
+    "JavaScript",
+    "HTML & CSS",
+    "REST API",
+    "Git & GitHub",
+    "MySQL"
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "title": "Dynamic Portfolio Website",
+      "description": "Portofolio full-stack pertama yang dibangun menggunakan Golang (net/http) sebagai backend API dan HTML/CSS/JS di frontend.",
+      "tech_stack": ["Golang", "HTML", "CSS", "JavaScript"],
+      "github_url": "https://github.com/username/portfolio",
+      "demo_url": "#"
+    },
+    {
+      "id": 2,
+      "title": "Task Tracker CLI App",
+      "description": "Aplikasi command-line sederhana menggunakan Golang untuk mengelola daftar tugas harian.",
+      "tech_stack": ["Golang", "CLI"],
+      "github_url": "https://github.com/username/task-tracker",
+      "demo_url": "#"
+    }
+  ]
+}
